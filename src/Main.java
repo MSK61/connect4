@@ -29,11 +29,11 @@ environment:  NetBeans IDE 6.5, Fedora release 10 (Cambridge)
 notes:        This is a private program.
 
  ************************************************************/
-package connect4;
+
 
 /**
  *
- * @author MAfifi
+ * @author Mohammed El-Afifi <Mohammed_ElAfifi@yahoo.com>
  */
 public class Main
   {
