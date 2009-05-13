@@ -17,11 +17,11 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Connect4.  If not, see <http://www.gnu.org/licenses/>.
  *
- * file:         Main.java
+ * file:         Conn4Move.java
  *
- * function:     application entry point
+ * function:     connect4 board transition
  *
- * description:  runs a connect4 game between the computer and the user
+ * description:  depicts a transition between two board layouts
  *
  * author:       Mohammed El-Afifi (ME)
  *
@@ -31,16 +31,45 @@
  *
  ************************************************************/
 /**
+ * transition between two <code>{@link Conn4Position}</code> instances, usually
+ * used to create offspring <code>Conn4Position</code>
  *
  * @author Mohammed El-Afifi <Mohammed_ElAfifi@yahoo.com>
  */
-public class Main
+public class Conn4Move extends Move
   {
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args)
+    Conn4Move(byte targetMove)
     {
-        // TODO code application logic here
+
+        itsColumn = targetMove;
+
+    }
+
+    @Override
+    public boolean equals(Object obj)
+    {
+        return (getClass() == obj.getClass() && itsColumn == ((Conn4Move)obj).
+            getItsColumn());
+    }
+
+    @Override
+    public int hashCode()
+    {
+        int hash = 7;
+        return hash;
+    }
+    private byte itsColumn;
+
+    /**
+     * Returns the column of the transition tile.
+     * To apply this transition, a tile should be inserted at the column
+     * specified by the return value
+     *
+     * @return column of the tile to be inserted
+     * @see    Conn4Position#Conn4Position(Conn4Position, boolean, Conn4Move)
+     */
+    public byte getItsColumn()
+    {
+        return itsColumn;
     }
   }
