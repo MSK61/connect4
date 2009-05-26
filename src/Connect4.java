@@ -109,7 +109,7 @@ public class Connect4 extends GameSearch
     public boolean wonPosition(Position p, boolean player)
     {
 
-        /// An invalid position is equivalent to human domination.
+        // An invalid position is equivalent to human domination.
         if (p == null) return player == HUMAN;
 
         return ((Conn4Position)p).Won(player);

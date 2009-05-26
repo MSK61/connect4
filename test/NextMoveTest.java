@@ -31,6 +31,7 @@
  * notes:        This is a private program.
  *
  ************************************************************/
+import java.util.ArrayList;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -98,13 +99,14 @@ public class NextMoveTest
             Conn4Position.rows - 1, Conn4Position.rows / 2, 0
         };
         // move needed to initialize the mock position
-        final Conn4Move mockMove = new Conn4Move((byte)0);
+        final byte mockMove = 0;
+        int numOfMoves;
         Conn4Position testPos = new Conn4Position();
         byte totalTiles = 0;
         final int validTestCols = Math.min(testHeights.length,
             Conn4Position.columns);
-        final Conn4Move[] moves = new Conn4Move[validTestCols - 1];
-        final Conn4Position[] expectedResult = new Conn4Position[moves.length];
+        final ArrayList<Conn4Move> moves = new ArrayList(validTestCols);
+        final Conn4Position[] expectedResult;
 
         System.out.println("possibleMoves with " + Connect4Test.GetPlayerDesc(
             itsPlayer) + " player");
@@ -137,8 +139,11 @@ public class NextMoveTest
                     new Conn4Move(columnCount));
 
         // Fill the array of moves.
-        for (; moveCount < moves.length;) moves[moveCount] = new Conn4Move(
-                ++moveCount);
+        columnHeights[mockMove]++;
+
+        for (columnCount = 0; columnCount < Conn4Position.columns; columnCount++)
+            if (columnHeights[columnCount] < Conn4Position.rows) moves.add(
+                    new Conn4Move(columnCount));
 
 
         try
@@ -147,21 +152,24 @@ public class NextMoveTest
                 Conn4Position.class,
                 new org.easymock.classextension.ConstructorArgs(
                 Conn4Position.class.getConstructor(Conn4Position.class,
-                boolean.class, Conn4Move.class), testPos, itsPlayer, mockMove),
-                Conn4Position.class.getMethod("GetNextMoves"));
-            // Get the player the same as the one originally provided to the
-            // test case.
+                boolean.class, Conn4Move.class), testPos, itsPlayer,
+                new Conn4Move(mockMove)), Conn4Position.class.getMethod(
+                "GetNextMoves"));
+            // Get the play role to the same as the one originally provided to
+            // the test case.
             itsPlayer = !itsPlayer;
+            numOfMoves = moves.size();
             org.easymock.classextension.EasyMock.expect(testPos.GetNextMoves()).
-                andReturn(moves);
+                andReturn(moves.toArray(new Conn4Move[numOfMoves]));
             org.easymock.classextension.EasyMock.replay(testPos);
+            expectedResult = new Conn4Position[numOfMoves];
 
-            for (moveCount = 0; moveCount < moves.length; moveCount++)
+            for (moveCount = 0; moveCount < numOfMoves; moveCount++)
                 expectedResult[moveCount] =
-                    new Conn4Position(testPos, itsPlayer, moves[moveCount]);
+                    new Conn4Position(testPos, itsPlayer, moves.get(moveCount));
 
-//            assertArrayEquals(expectedResult, testObj.possibleMoves(testPos,
-//                itsPlayer));
+            assertArrayEquals(expectedResult, testObj.possibleMoves(testPos,
+                itsPlayer));
         }
         catch (Exception err)
         {

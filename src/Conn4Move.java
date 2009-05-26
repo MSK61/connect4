@@ -55,8 +55,7 @@ public class Conn4Move extends Move
     @Override
     public int hashCode()
     {
-        int hash = 7;
-        return hash;
+        return itsColumn;
     }
     private byte itsColumn;
 

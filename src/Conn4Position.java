@@ -103,14 +103,14 @@ public class Conn4Position extends Position
         logger.fine("Creating a board layout based on a previous layout...");
         logger.finest("for player " + player + "with move at column " +
             moveColIndex);
-        /// Copy the original board layout first.
+        // Copy the original board layout first.
         itsTiles = Arrays.copyOf(srcTiles, columns);
         assert moveColIndex >= 0 && moveColIndex < columns:
             "invalid insertion column";
         assert itsTiles[moveColIndex] == null || itsTiles[moveColIndex].length <
             rows: "full column";
 
-        /// Copy the column of the new tile carefully.
+        // Copy the column of the new tile carefully.
         if (itsTiles[moveColIndex] == null) itsTiles[moveColIndex] =
                 new TileType[1];
         else
@@ -125,7 +125,7 @@ public class Conn4Position extends Position
         }
 
         itsTiles[moveColIndex][itsTiles[moveColIndex].length - 1] = GetTile(
-            player);/// Insert the new tile to its column.
+            player);// Insert the new tile to its column.
 
     }
 
@@ -137,12 +137,12 @@ public class Conn4Position extends Position
 
         logger.finer("Comparing two positions...");
 
-        /// Heterogeneous objects aren't equal.
-        if (getClass() == obj.getClass()) return false;
+        // Heterogeneous objects aren't equal.
+        if (!(obj instanceof Conn4Position)) return false;
 
         rHS = ((Conn4Position)obj).getItsTiles();
 
-        /// Any different columns qualify for inequality.
+        // Any different columns qualify for inequality.
         for (colCount = 0; colCount < columns && Arrays.equals(
             itsTiles[colCount], rHS[colCount]); colCount++)
         {
