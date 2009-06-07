@@ -31,7 +31,9 @@
  * notes:        This is a private program.
  *
  ************************************************************/
-import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedList;
+import org.easymock.classextension.EasyMock;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -56,10 +58,10 @@ public class NextMoveTest
     }
 
     @Parameterized.Parameters
-    public static java.util.Collection<Object[]> InjectData()
+    public static java.util.List<Object[]> InjectData()
     {
 
-        return java.util.Arrays.asList(new Object[]
+        return Arrays.asList(new Object[]
             {
                 Connect4.HUMAN
             }, new Object[]
@@ -88,7 +90,7 @@ public class NextMoveTest
     // @Test
     // public void hello() {}
     @Test
-    public void test()
+    public void Test()
     {
         byte columnCount = 0,
             rowCount,
@@ -105,10 +107,10 @@ public class NextMoveTest
         byte totalTiles = 0;
         final int validTestCols = Math.min(testHeights.length,
             Conn4Position.columns);
-        final ArrayList<Conn4Move> moves = new ArrayList(validTestCols);
+        final LinkedList<Conn4Move> moves = new LinkedList<Conn4Move>();
         final Conn4Position[] expectedResult;
 
-        System.out.println("possibleMoves with " + Connect4Test.GetPlayerDesc(
+        System.out.println("possibleMoves with " + Connect4.GetPlayerDesc(
             itsPlayer) + " player");
 
         // Determine how many tiles to be inserted in each column.
@@ -121,13 +123,9 @@ public class NextMoveTest
         }
 
         // Fill the remaining columns completely.
-        for (; columnCount < Conn4Position.columns; columnCount++)
-        {
-
-            columnHeights[columnCount] = Conn4Position.rows;
-            totalTiles += columnHeights[columnCount];
-
-        }
+        Arrays.fill(columnHeights, validTestCols, Conn4Position.columns,
+            Conn4Position.rows);
+        totalTiles += Conn4Position.rows * (Conn4Position.columns - columnCount);
 
         // Determine the first player.
         if (totalTiles / Connect4.players == 0) itsPlayer = !itsPlayer;
@@ -141,15 +139,14 @@ public class NextMoveTest
         // Fill the array of moves.
         columnHeights[mockMove]++;
 
+        // Calculate the mock response.
         for (columnCount = 0; columnCount < Conn4Position.columns; columnCount++)
             if (columnHeights[columnCount] < Conn4Position.rows) moves.add(
                     new Conn4Move(columnCount));
 
-
         try
         {
-            testPos = org.easymock.classextension.EasyMock.createMock(
-                Conn4Position.class,
+            testPos = EasyMock.createMock(Conn4Position.class,
                 new org.easymock.classextension.ConstructorArgs(
                 Conn4Position.class.getConstructor(Conn4Position.class,
                 boolean.class, Conn4Move.class), testPos, itsPlayer,
@@ -159,14 +156,15 @@ public class NextMoveTest
             // the test case.
             itsPlayer = !itsPlayer;
             numOfMoves = moves.size();
-            org.easymock.classextension.EasyMock.expect(testPos.GetNextMoves()).
-                andReturn(moves.toArray(new Conn4Move[numOfMoves]));
-            org.easymock.classextension.EasyMock.replay(testPos);
+            EasyMock.expect(testPos.GetNextMoves()).andReturn(moves.toArray(
+                new Conn4Move[numOfMoves]));
+            EasyMock.replay(testPos);
             expectedResult = new Conn4Position[numOfMoves];
+            moveCount = 0;
 
-            for (moveCount = 0; moveCount < numOfMoves; moveCount++)
-                expectedResult[moveCount] =
-                    new Conn4Position(testPos, itsPlayer, moves.get(moveCount));
+            // Calculate the expected response.
+            for (Conn4Move curMove: moves) expectedResult[moveCount++] =
+                    new Conn4Position(testPos, itsPlayer, curMove);
 
             assertArrayEquals(expectedResult, testObj.possibleMoves(testPos,
                 itsPlayer));

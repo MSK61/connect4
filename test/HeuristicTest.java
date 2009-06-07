@@ -17,11 +17,12 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Connect4.  If not, see <http://www.gnu.org/licenses/>.
  *
- * file:         WonNullPosTest.java
+ * file:         HeuristicTest.java
  *
- * function:     robustness test
+ * function:     unit test
  *
- * description:  tests the wonPosition method vs null positions
+ * description:  tests the Heuristic method of the Conn4Position class for
+ *               different players
  *
  * author:       Mohammed El-Afifi (ME)
  *
@@ -41,17 +42,15 @@ import static org.junit.Assert.*;
  * @author Mohammed El-Afifi <Mohammed_ElAfifi@yahoo.com>
  */
 @org.junit.runner.RunWith(Parameterized.class)
-public class WonNullPosTest
+public class HeuristicTest
   {
-    private static Connect4 testObj;
-    private boolean itsPlayer;
-    private boolean itsExpectedRes;
+    private static boolean tilePlayer;
+    private boolean itsMaxPlayer;
 
-    public WonNullPosTest(final boolean player, final boolean testResult)
+    public HeuristicTest(final boolean tilePlayer)
     {
 
-        itsPlayer = player;
-        itsExpectedRes = testResult;
+        itsMaxPlayer = tilePlayer;
 
     }
 
@@ -61,10 +60,10 @@ public class WonNullPosTest
 
         return java.util.Arrays.asList(new Object[]
             {
-                Connect4.HUMAN, true
+                Connect4.HUMAN
             }, new Object[]
             {
-                Connect4.PROGRAM, false
+                Connect4.PROGRAM
             });
 
     }
@@ -73,7 +72,7 @@ public class WonNullPosTest
     public static void setUpClass() throws Exception
     {
 
-        testObj = new Connect4();
+        tilePlayer = (new java.util.Random()).nextBoolean();
 
     }
 
@@ -90,10 +89,20 @@ public class WonNullPosTest
     @Test
     public void Test()
     {
+        byte colCount = 0;
+        Conn4Position testObj = new Conn4Position();
 
-        System.out.println("wonPosition with " + Connect4.GetPlayerDesc(
-            itsPlayer) + " player");
-        assertEquals(testObj.wonPosition(null, itsPlayer), itsExpectedRes);
+        System.out.println("Heuristic with " +
+            Connect4.GetPlayerDesc(tilePlayer) + " tiles and " + Connect4.
+            GetPlayerDesc(itsMaxPlayer) + " maximizing player");
+
+        // Compose the board layout.
+        for (; colCount < Conn4Position.collection; colCount++) testObj =
+                new Conn4Position(testObj, tilePlayer, new Conn4Move(colCount));
+
+        assertEquals(
+            (tilePlayer == itsMaxPlayer) ? Short.MAX_VALUE : -Short.MAX_VALUE,
+            testObj.Heuristic(itsMaxPlayer));
 
     }
   }

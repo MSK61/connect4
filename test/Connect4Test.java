@@ -48,15 +48,6 @@ public class Connect4Test
     {
     }
 
-    static final String GetPlayerDesc(final boolean player)
-    {
-        // player descriptions
-        final String humanDesc = "human",  progDesc = "program";
-
-        return (player == Connect4.HUMAN) ? humanDesc : progDesc;
-
-    }
-
     @BeforeClass
     public static void setUpClass() throws Exception
     {

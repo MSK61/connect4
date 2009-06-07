@@ -17,11 +17,11 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Connect4.  If not, see <http://www.gnu.org/licenses/>.
  *
- * file:         Conn4Move.java
+ * file:         BareFormatter.java
  *
- * function:     connect4 board transition
+ * function:     easy log formatter
  *
- * description:  depicts a transition between two board layouts
+ * description:  applies a no-change bare formatting to log records
  *
  * author:       Mohammed El-Afifi (ME)
  *
@@ -30,45 +30,22 @@
  * notes:        This is a private program.
  *
  ************************************************************/
+import java.util.logging.LogRecord;
+
 /**
- * Transition between two <code>{@link Conn4Position}</code> instances, usually
- * used to create offspring <code>Conn4Position</code>.
+ * Bare logging formatter.
+ * This formatter delivers log messages in their raw format AS IS, without any
+ * added formatting.
  *
  * @author Mohammed El-Afifi <Mohammed_ElAfifi@yahoo.com>
  */
-public class Conn4Move extends Move
+public class BareFormatter extends java.util.logging.Formatter
   {
-    Conn4Move(byte targetMove)
-    {
-
-        itsColumn = targetMove;
-
-    }
-
     @Override
-    public boolean equals(Object obj)
+    public String format(LogRecord record)
     {
-        return (getClass() == obj.getClass() && itsColumn == ((Conn4Move)obj).
-            getItsColumn());
-    }
+        final String newLine = System.getProperty("line.separator");
 
-    @Override
-    public int hashCode()
-    {
-        return itsColumn;
-    }
-    private byte itsColumn;
-
-    /**
-     * Returns the column of the transition tile.
-     * To apply this transition, a tile should be inserted at the column
-     * specified by the return value
-     *
-     * @return column of the tile to be inserted
-     * @see    Conn4Position#Conn4Position(Conn4Position, boolean, Conn4Move)
-     */
-    public byte getItsColumn()
-    {
-        return itsColumn;
+        return formatMessage(record) + newLine;
     }
   }

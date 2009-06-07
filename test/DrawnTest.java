@@ -17,11 +17,12 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Connect4.  If not, see <http://www.gnu.org/licenses/>.
  *
- * file:         WonNullPosTest.java
+ * file:         DrawnTest.java
  *
- * function:     robustness test
+ * function:     unit test
  *
- * description:  tests the wonPosition method vs null positions
+ * description:  tests the Drawn method of the Conn4Position class for different
+ *               connect4 board positions
  *
  * author:       Mohammed El-Afifi (ME)
  *
@@ -31,6 +32,7 @@
  *
  ************************************************************/
 import org.junit.AfterClass;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runners.Parameterized;
@@ -41,16 +43,16 @@ import static org.junit.Assert.*;
  * @author Mohammed El-Afifi <Mohammed_ElAfifi@yahoo.com>
  */
 @org.junit.runner.RunWith(Parameterized.class)
-public class WonNullPosTest
+public class DrawnTest
   {
-    private static Connect4 testObj;
-    private boolean itsPlayer;
+    private byte itsColHeight;
     private boolean itsExpectedRes;
+    private Conn4Position itsTestObj;
 
-    public WonNullPosTest(final boolean player, final boolean testResult)
+    public DrawnTest(final byte colHeight, final boolean testResult)
     {
 
-        itsPlayer = player;
+        itsColHeight = colHeight;
         itsExpectedRes = testResult;
 
     }
@@ -61,10 +63,13 @@ public class WonNullPosTest
 
         return java.util.Arrays.asList(new Object[]
             {
-                Connect4.HUMAN, true
+                (byte)0, false
             }, new Object[]
             {
-                Connect4.PROGRAM, false
+                (byte)(Conn4Position.rows / 2), false
+            }, new Object[]
+            {
+                Conn4Position.rows, true
             });
 
     }
@@ -72,14 +77,19 @@ public class WonNullPosTest
     @BeforeClass
     public static void setUpClass() throws Exception
     {
-
-        testObj = new Connect4();
-
     }
 
     @AfterClass
     public static void tearDownClass() throws Exception
     {
+    }
+
+    @Before
+    public void setUp()
+    {
+
+        itsTestObj = new Conn4Position();
+
     }
 
     // TODO add test methods here.
@@ -90,10 +100,21 @@ public class WonNullPosTest
     @Test
     public void Test()
     {
+        byte columnCount = 0,
+            rowCount;
+        // The first player doesn't really matter here.
+        boolean player = (new java.util.Random()).nextBoolean();
 
-        System.out.println("wonPosition with " + Connect4.GetPlayerDesc(
-            itsPlayer) + " player");
-        assertEquals(testObj.wonPosition(null, itsPlayer), itsExpectedRes);
+        System.out.println("Drawn with " + itsColHeight + " rows and " +
+            Connect4.GetPlayerDesc(player) + " beginner");
+
+        // Compose the board layout.
+        for (; columnCount < Conn4Position.columns; columnCount++)
+            for (rowCount = 0; rowCount < itsColHeight; rowCount++, player =
+                    !player) itsTestObj = new Conn4Position(itsTestObj, player,
+                    new Conn4Move(columnCount));
+
+        assertEquals(itsExpectedRes, itsTestObj.Drawn());
 
     }
   }

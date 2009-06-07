@@ -36,8 +36,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * connect4 game manager, provides input values and decision criteria for the
- * alpha-beta algorithm
+ * Connect4 game manager, provides input values and decision criteria for the
+ * alpha-beta algorithm.
  *
  * @author Mohammed El-Afifi <Mohammed_ElAfifi@yahoo.com>
  */
@@ -62,7 +62,7 @@ public class Connect4 extends GameSearch
     public Connect4(byte itsDepth)
     {
 
-        logger.fine("Creating a connect4 game...");
+        logger.finer("Creating a connect4 game...");
         logger.finest("with a custom depth of " + itsDepth);
         this.itsDepth = itsDepth;
         SetStdIn();
@@ -76,7 +76,7 @@ public class Connect4 extends GameSearch
     {
         final byte defMaxDepth = 3;
 
-        logger.fine("Creating a connect4 game...");
+        logger.finer("Creating a connect4 game...");
         logger.finest("with a default depth of " + defMaxDepth);
         itsDepth = defMaxDepth;
         SetStdIn();
@@ -90,6 +90,15 @@ public class Connect4 extends GameSearch
         if (p == null) return true;
 
         return ((Conn4Position)p).Drawn();
+
+    }
+
+    static final String GetPlayerDesc(final boolean player)
+    {
+        // player descriptions
+        final String humanDesc = "human",  progDesc = "program";
+
+        return (player == Connect4.HUMAN) ? humanDesc : progDesc;
 
     }
 
