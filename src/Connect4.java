@@ -231,7 +231,8 @@ public class Connect4 extends GameSearch
 
     }
 
-    /** Reads a move from the human user.
+    /**
+     * Reads a move from the human user.
      * The method prompts the user for a move to make when it's the human's turn
      * to play. The obtained move is validated statically(but not dynamically
      * depending on the current board layout). Upon entering an invalid move,
