@@ -1,0 +1,39 @@
+Microsoft Visual Studio Solution File, Format Version 8.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Connect4", "Connect4\Connect4.csproj", "{638351B5-B993-4D63-966A-1858D528C6A5}"
+	ProjectSection(ProjectDependencies) = postProject
+		{6029651F-522A-4053-BC20-7DEB2A4819AD} = {6029651F-522A-4053-BC20-7DEB2A4819AD}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SetupReg", "Connect4\SetupReg\SetupReg.csproj", "{7E2C7850-E29C-4FE7-8BD8-28DBF94CC7BD}"
+	ProjectSection(ProjectDependencies) = postProject
+		{6029651F-522A-4053-BC20-7DEB2A4819AD} = {6029651F-522A-4053-BC20-7DEB2A4819AD}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Connect4Library", "Connect4Library\Connect4Library.csproj", "{6029651F-522A-4053-BC20-7DEB2A4819AD}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfiguration) = preSolution
+		Debug = Debug
+		Release = Release
+	EndGlobalSection
+	GlobalSection(ProjectConfiguration) = postSolution
+		{638351B5-B993-4D63-966A-1858D528C6A5}.Debug.ActiveCfg = Debug|.NET
+		{638351B5-B993-4D63-966A-1858D528C6A5}.Debug.Build.0 = Debug|.NET
+		{638351B5-B993-4D63-966A-1858D528C6A5}.Release.ActiveCfg = Release|.NET
+		{638351B5-B993-4D63-966A-1858D528C6A5}.Release.Build.0 = Release|.NET
+		{7E2C7850-E29C-4FE7-8BD8-28DBF94CC7BD}.Debug.ActiveCfg = Debug|.NET
+		{7E2C7850-E29C-4FE7-8BD8-28DBF94CC7BD}.Debug.Build.0 = Debug|.NET
+		{7E2C7850-E29C-4FE7-8BD8-28DBF94CC7BD}.Release.ActiveCfg = Release|.NET
+		{7E2C7850-E29C-4FE7-8BD8-28DBF94CC7BD}.Release.Build.0 = Release|.NET
+		{6029651F-522A-4053-BC20-7DEB2A4819AD}.Debug.ActiveCfg = Debug|.NET
+		{6029651F-522A-4053-BC20-7DEB2A4819AD}.Debug.Build.0 = Debug|.NET
+		{6029651F-522A-4053-BC20-7DEB2A4819AD}.Release.ActiveCfg = Release|.NET
+		{6029651F-522A-4053-BC20-7DEB2A4819AD}.Release.Build.0 = Release|.NET
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+EndGlobal
