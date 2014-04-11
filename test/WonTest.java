@@ -1,7 +1,7 @@
 
 /************************************************************
  *
- * Copyright 2009 Mohammed El-Afifi
+ * Copyright 2009, 2014 Mohammed El-Afifi
  * This file is part of Connect4.
  *
  * Connect4 is free software: you can redistribute it and/or modify
