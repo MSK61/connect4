@@ -56,8 +56,7 @@ public class Connect4 extends GameSearch
     /**
      * Creates a connect4 game with the speicfied look-ahead depth.
      *
-     * @param itsDepth a <code></code> representing the maximum depth of the
-     *                 tree
+     * @param itsDepth maximum depth of the tree
      */
     public Connect4(byte itsDepth)
     {
